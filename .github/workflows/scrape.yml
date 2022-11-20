@@ -11,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out this repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+        cache: pip
+    - name: Install dependencies
+      run: pip install -r requirements.txt
     - name: Fetch latest data
       run: |-
         curl https://instances.social/instances.json | \
@@ -24,3 +31,16 @@ jobs:
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
         git push
+    - name: Build and publish database using git-history
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |-
+        # First download previous database to save some time
+        wget https://scrape-instances-social.s3.amazonaws.com/counts.db
+        # Update with latest commits
+        ./build-count-history.sh
+        # Upload to S3
+        s3-credentials put-object scrape-instances-social counts.db counts.db \
+          --access-key $AWS_ACCESS_KEY_ID \
+          --secret-key $AWS_SECRET_ACCESS_KEY
