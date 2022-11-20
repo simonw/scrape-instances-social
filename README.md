@@ -1,5 +1,7 @@
 # scrape-instances-social
 
+For full details about how this works, see [Tracking Mastodon user numbers over time with a bucket of tricks](https://simonwillison.net/2022/Nov/20/tracking-mastodon/) on my blog.
+
 https://instances.social/instances.json is a list of Mastodon instances, including their number of statuses and users.
 
 This repo scrapes that and records the history of the file, a form of [Git scraping](https://simonwillison.net/2020/Oct/9/git-scraping/).
