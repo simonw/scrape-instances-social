@@ -6,10 +6,14 @@ This repo scrapes that and records the history of the file, a form of [Git scrap
 
 ## Building a database
 
-You can use the [git-history](https://datasette.io/tools/git-history) tool to build a SQLite database of the history of this file:
+You can use the [git-history](https://datasette.io/tools/git-history) tool to build a SQLite database of the history of the instances:
 
     pip install -r requirements.txt
     # (or just pip install git-history)
-    ./build-history.sh
+    ./build-instance-history.sh
 
 You can run that script multiple times and it will only update the database with new commits that have not been seen before.
+
+You can also build a much smaller SQLite database of just the counts of users and statuses over time:
+
+    ./build-count-history.sh
