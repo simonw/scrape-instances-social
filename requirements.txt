@@ -1,2 +1,3 @@
+sqlite-utils
 git-history
 s3-credentials

@@ -40,6 +40,7 @@ jobs:
         wget https://scrape-instances-social.s3.amazonaws.com/counts.db
         # Update with latest commits
         ./build-count-history.sh
+        sqlite-utils tables counts.db --counts
         # Upload to S3
         s3-credentials put-object scrape-instances-social counts.db counts.db \
           --access-key $AWS_ACCESS_KEY_ID \
