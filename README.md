@@ -6,6 +6,8 @@ https://instances.social/instances.json is a list of Mastodon instances, includi
 
 This repo scrapes that and records the history of the file, a form of [Git scraping](https://simonwillison.net/2020/Oct/9/git-scraping/).
 
+You can browse the most recent copy of the scraped data using Datasette Lite here: https://lite.datasette.io/?json=https%3A%2F%2Fraw.githubusercontent.com%2Fsimonw%2Fscrape-instances-social%2Fmain%2Finstances.json#/data/instances?_sort=users&_sort_by_desc=on
+
 ## Building a database
 
 You can use the [git-history](https://datasette.io/tools/git-history) tool to build a SQLite database of the history of the instances:
