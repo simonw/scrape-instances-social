@@ -13,6 +13,8 @@ git-history file counts.db instances.json \
     'banco@mastodon.social',
     'zahra@mastodon.social',
     'junhong@mastodon.social',
+    'switter.at',
+    'md.distsn.org',
   ]
   instances = [
       instance for instance in json.loads(content)
