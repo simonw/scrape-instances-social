@@ -3,8 +3,15 @@ name: Scrape latest data
 on:
   push:
   workflow_dispatch:
+    inputs:
+      from_scratch:
+        description: 'Rebuild database from scratch'
+        required: false
+        type: boolean
   schedule:
     - cron:  '9,29,40 * * * *'
+
+concurrency: scraper
 
 jobs:
   scheduled:
@@ -31,14 +38,15 @@ jobs:
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
         git push
+    - name: Download previous database
+      if: github.event.inputs.from_scratch != 'true'
+      run: |
+        curl -O https://scrape-instances-social.s3.amazonaws.com/counts.db
     - name: Build and publish database using git-history
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |-
-        # First download previous database to save some time
-        wget https://scrape-instances-social.s3.amazonaws.com/counts.db
-        # Update with latest commits
         ./build-count-history.sh
         sqlite-utils tables counts.db --counts
         # Upload to S3
