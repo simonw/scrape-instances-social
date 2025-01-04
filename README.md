@@ -1,5 +1,7 @@
 # scrape-instances-social
 
+> **Repo archived** on 4th January 2025 - this project is no longer active.
+
 For full details about how this works, see [Tracking Mastodon user numbers over time with a bucket of tricks](https://simonwillison.net/2022/Nov/20/tracking-mastodon/) on my blog.
 
 https://instances.social/instances.json is a list of Mastodon instances, including their number of statuses and users.
